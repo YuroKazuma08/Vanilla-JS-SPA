@@ -15,11 +15,14 @@ body {
    justify-content: center;
    align-items: center;
    background-image: linear-gradient(-30deg, #6d53ff, #0ae2ff);
+   background-repeat: no-repeat;
+   background-attachment: fixed;
 }
 
 .post-maker {
    background-color: cornsilk;
    position: relative;
+   z-index: 1;
    width: 50vw;
    display: flex;
    justify-content: center;
@@ -45,7 +48,7 @@ body {
    padding: 5px 10px;
 }
 
-#post-textarea {
+#caption {
    height: 100px;
    width: 100%;
    margin: 15px 0;
@@ -65,70 +68,15 @@ body {
    cursor: pointer;
 }
 
+.post-btn-submit:hover {
+   background-color: rgb(104, 207, 0);
+}
+
 .posts-container {
    position: relative;
    display: flex;
-   flex-direction: column;
+   flex-direction: column-reverse;
    justify-content: center;
-}
-
-.post-content {
-   background-color: cornsilk;
-   display: flex;
-   flex-direction: column;
-   width: 45vw;
-   margin: 10px;
-   padding: 15px;
-   border: 1px solid black;
-   border-radius: 5px;
-   box-shadow: -2px 4px 7px 1px rgba(0,0,0,0.2), -1px 2px 3px 1px rgba(0,0,0,0.2);
-}
-
-.post-title {
-   text-align: center;
-}
-
-.post-details {
-   display: flex;
-   flex-direction: row;
-}
-
-.post-details h3 {
-   font-size: 15px;
-   color: gray;
-   font-weight: 300;
-   margin: 3px 8px;
-}
-
-.post-content p {
-   color: black;
-   font-weight: 200;
-   margin: 8px 0px;
-   padding: 10px 10px;
-}
-
-.post-controls {
-   display: flex;
-   flex-direction: row;
-   justify-content: flex-end;
-}
-
-.post-controls button {
-   color: white;
-   width: 75px;
-   font-size: 17px;
-   font-weight: 500;
-   margin: 5px;
-   padding: 3px;
-   cursor: pointer;
-   border: 1px solid black;
-   border-radius: 5px;
-}
-
-.post-btn-edit {
-   background-color: blue;
-}
-
-.post-btn-delete {
-   background-color: red;
+   align-items: center;
+   width: 50vw;
 }

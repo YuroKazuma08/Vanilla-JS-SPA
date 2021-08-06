@@ -5,7 +5,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="./css/styles.css">
       <title>Vanilla JS | SPA</title>
    </head>
 
@@ -14,71 +14,20 @@
    <body>
 
       <div class="post-maker">
-         <form action="posts" method="POST" class="post-form">
-            <input type="text" name="author" id="author" placeholder="Enter your name...">
-            <input type="text" name="title" id="title" placeholder="Enter Post Title...">
-            <textarea name="post-textarea" id="post-textarea" cols="30" rows="10" placeholder="Type your post here..."></textarea>
+         <form action="" method="POST" class="post-form">
+            <input type="text" name="author" id="author" placeholder="Enter your name..." required>
+            <input type="text" name="title" id="title" placeholder="Enter Post Title..." required>
+            <textarea name="caption" id="caption" cols="30" rows="10" placeholder="Type your post here..." required></textarea>
             <button class="post-btn-submit">POST</button>
          </form>
       </div>
       <div class="posts-container">
 
          <!-- POSTS TEMPLATE -->
-         <div class="post-content">
-            <h1 class="post-title">POST TITLE</h1>
-            <div class="post-details">
-               <h3>&gt; Author Name — Date & Time</h3>
-            </div>
-            <hr>
-            <p class="post-caption">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure, ducimus laudantium perspiciatis placeat ut labore, sed a quae maxime iusto molestias itaque! Natus, ipsum laudantium!</p>
-            <hr>
-            <div class="post-controls">
-               <button class="post-btn-edit">EDIT</button>
-               <button class="post-btn-delete">DELETE</button>
-            </div>
-         </div>
-         <div class="post-content">
-            <h1 class="post-title">POST TITLE</h1>
-            <div class="post-details">
-               <h3>&gt; Author Name — Date & Time</h3>
-            </div>
-            <hr>
-            <p class="post-caption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quidem dignissimos possimus earum quasi vero, nostrum deserunt ea facere. Fugiat necessitatibus assumenda eos molestias amet rem quos aut, voluptas quaerat obcaecati dolor dolorem corrupti, iure nesciunt temporibus molestiae tempore minus. Ea, laboriosam doloribus? Doloremque aliquid id blanditiis totam veritatis deleniti sint, sequi eos! Blanditiis quae temporibus ex quasi quia, aliquam corporis illum atque ut reprehenderit? Quasi accusantium fugit voluptatem eius laboriosam quam corrupti molestiae quas.</p>
-            <hr>
-            <div class="post-controls">
-               <button class="post-btn-edit">EDIT</button>
-               <button class="post-btn-delete">DELETE</button>
-            </div>
-         </div>
-         <div class="post-content">
-            <h1 class="post-title">POST TITLE</h1>
-            <div class="post-details">
-               <h3>&gt; Author Name — Date & Time</h3>
-            </div>
-            <hr>
-            <p class="post-caption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia numquam error sit dolorum totam mollitia dolores iusto quas maiores ducimus, eum a, magnam velit nam?</p>
-            <hr>
-            <div class="post-controls">
-               <button class="post-btn-edit">EDIT</button>
-               <button class="post-btn-delete">DELETE</button>
-            </div>
-         </div>
-         <div class="post-content">
-            <h1 class="post-title">POST TITLE</h1>
-            <div class="post-details">
-               <h3>&gt; Author Name — Date & Time</h3>
-            </div>
-            <hr>
-            <p class="post-caption">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident nulla neque, recusandae alias, quam ipsa ut maxime doloremque numquam nihil iure non ea! Totam ad illum non tempora, amet, quidem voluptatibus voluptatem et ipsam rem molestias unde, nemo sunt? Fuga ipsum, numquam dicta consectetur atque voluptas quidem neque animi! Fugiat mollitia doloribus, inventore in tempore harum. Cumque itaque qui facilis asperiores dolore atque, rem fuga accusamus ratione voluptates! Dolores earum, dolorum nam sapiente sint eos aliquam, similique incidunt nihil impedit commodi nostrum doloremque omnis rerum officia. Fugit ad perferendis possimus, neque, laudantium adipisci praesentium porro necessitatibus debitis eos laboriosam quaerat!</p>
-            <hr>
-            <div class="post-controls">
-               <button class="post-btn-edit">EDIT</button>
-               <button class="post-btn-delete">DELETE</button>
-            </div>
-         </div>
-         <!--END OF POSTS TEMPLATE -->
 
       </div>
+
+      <script src="app.js"></script>
    </body>
 
 </html>

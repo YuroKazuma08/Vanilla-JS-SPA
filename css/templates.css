@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500&display=swap');
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
+}
+
+.post-content {
+   background-color: cornsilk;
+   display: flex;
+   flex-direction: column;
+   width: 45vw;
+   margin: 10px;
+   padding: 15px;
+   border: 1px solid black;
+   border-radius: 5px;
+   box-shadow: -2px 4px 7px 1px rgba(0,0,0,0.2), -1px 2px 3px 1px rgba(0,0,0,0.2);
+   animation: slide-in 0.4s cubic-bezier(0.03, 1.29, 0.96, 1.04);
+}
+
+@keyframes slide-in {
+   0% {
+      transform: translateY(-250px);
+      width: 50vw;
+      opacity: 0;
+   }
+   100% {
+      transform: translateY(0px);
+      width: 45vw;
+      opacity: 1;
+   }
+}
+
+.post-title {
+   text-align: center;
+}
+
+.post-details {
+   display: flex;
+   flex-direction: row;
+}
+
+.post-details h3 {
+   font-size: 15px;
+   color: gray;
+   font-weight: 300;
+   margin: 3px 8px;
+}
+
+.post-content p {
+   color: black;
+   font-weight: 200;
+   margin: 8px 0px;
+   padding: 10px 10px;
+}
+
+.post-controls {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+}
+
+.post-controls button {
+   color: white;
+   width: 75px;
+   font-size: 17px;
+   font-weight: 500;
+   margin: 5px;
+   padding: 3px;
+   cursor: pointer;
+   border: 1px solid black;
+   border-radius: 5px;
+}
+
+.post-btn-edit {
+   background-color: blue;
+}
+
+.post-btn-edit:hover {
+   background-color: rgb(37, 157, 255);
+}
+
+.post-btn-delete {
+   background-color: red;
+}
+
+.post-btn-delete:hover {
+   background-color: rgb(250, 74, 74);
+}
