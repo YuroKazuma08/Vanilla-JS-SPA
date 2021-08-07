@@ -9,6 +9,7 @@
 
 body {
    width: 100%;
+   overflow-x: hidden;
    position: relative;
    display: flex;
    flex-direction: column;
@@ -79,4 +80,103 @@ body {
    justify-content: center;
    align-items: center;
    width: 50vw;
+}
+
+@keyframes deleted {
+   20% {
+      transform: scale(0.7);
+   }
+   100% {
+      transform: translateX(100%) scale(0.65);
+      opacity: 0;
+   }
+   
+}
+
+.popup-bg {
+   position: fixed;
+   z-index: 2;
+   top: 0;
+   left: 0;
+   height: 100%;
+   width: 100%;
+   justify-content: center;
+   align-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.7);
+   pointer-events: none;
+   display: none;
+}
+
+.popup-edit {
+   background-color: cornsilk;
+   position: relative;
+   z-index: 3;
+   width: 50vw;
+   justify-content: center;
+   flex-direction: column;
+   margin: 20px;
+   padding: 15px;
+   border: 1px solid black;
+   border-radius: 5px;
+   box-shadow: -2px 4px 7px 1px rgba(0,0,0,0.2), -1px 2px 3px 1px rgba(0,0,0,0.2);
+   pointer-events: none;
+   display: none;
+}
+
+.edit-form {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.popup-btn-close {
+   transform: rotate(45deg);
+   align-self: flex-end;
+   position: relative;
+   color: red;
+   line-height: 20px;
+   cursor: pointer;
+}
+
+.edit-form h2 {
+   line-height: 25px;
+}
+
+.edit-form input {
+   width: 100%;
+   margin: 10px 0;
+   padding: 5px 10px;
+}
+
+#edit-caption {
+   height: 100px;
+   width: 100%;
+   margin: 15px 0;
+   padding: 10px;
+   resize: none;
+}
+
+.popup-btn-edit {
+   width: 100%;
+   color: white;
+   font-size: 17px;
+   font-weight: 500;
+   background-color: green;
+   border: 1px solid black;
+   border-radius: 5px;
+   padding: 3px;
+   cursor: pointer;
+}
+
+.popup-btn-edit:hover {
+   background-color: rgb(104, 207, 0);
+}
+
+.popup-active {
+   pointer-events: auto;
+   display: flex;
 }

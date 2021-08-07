@@ -17,7 +17,7 @@
          <form action="" method="POST" class="post-form">
             <input type="text" name="author" id="author" placeholder="Enter your name..." required>
             <input type="text" name="title" id="title" placeholder="Enter Post Title..." required>
-            <textarea name="caption" id="caption" cols="30" rows="10" placeholder="Type your post here..." required></textarea>
+            <textarea name="caption" id="caption" placeholder="Type your post here..." required></textarea>
             <button class="post-btn-submit">POST</button>
          </form>
       </div>
@@ -25,6 +25,23 @@
 
          <!-- POSTS TEMPLATE -->
 
+      </div>
+
+      <div class="popup-bg">
+         <div class="popup-edit">
+            <h1 class="popup-btn-close">+</h1>
+            <form action="" method="POST" class="edit-form">
+               <h2>EDIT YOUR POST:</h2>
+               <input type="text" id="edit-author" placeholder="Enter your name...">
+               <input type="text" id="edit-title" placeholder="Enter Post Title...">
+               <textarea name="" id="edit-caption" placeholder="Type your post here..."></textarea>
+               <button class="popup-btn-edit">EDIT</button>
+            </form>
+         </div>
+
+         <div class="delete-warning">
+
+         </div>
       </div>
 
       <script src="app.js"></script>

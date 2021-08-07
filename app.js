@@ -10,9 +10,14 @@ window.customElements.define('post-template', PostTemplate);
 
 const template = document.createElement('template');
 const postsContainer = document.querySelector('.posts-container');
-const [ author, title, caption, postBtn ] = document.querySelector('.post-form')
+const popupContainer = document.querySelector('.popup-bg');
+const popupCloseBtn = document.querySelectorAll('.popup-btn-close');
+const [ postEditor, deleteWarning ] = popupContainer.children;
+const [ editAuthor, editTitle, editCaption, popupEditBtn ] = document.querySelector('.edit-form');
+const [ author, title, caption, postSubmitBtn ] = document.querySelector('.post-form');
+const postEdit = new Event('editingpost');
 
-postBtn.addEventListener('click', (e) => {
+postSubmitBtn.addEventListener('click', (e) => {
 
    e.preventDefault();
 
@@ -20,14 +25,7 @@ postBtn.addEventListener('click', (e) => {
    if (!title.value) return alert('Please enter a title for your post.');
    if (!caption.value) return alert('Post caption cannot be empty!');
 
-   const now = new Date();
-   const month = now.getMonth();
-   const date = now.getDate();
-   const year = now.getFullYear();
-   const hr = now.getHours() % 12;
-   const mins = now.getMinutes().toString().padStart(2, '0');
-   const ampm = now.getHours() > 12 ? 'PM' : 'AM';
-   const time = `${month}/${date}/${year} (${hr}:${mins} ${ampm})`;
+   let time = getTime();
 
    template.innerHTML = `
 
@@ -54,4 +52,88 @@ postBtn.addEventListener('click', (e) => {
 
    document.querySelector('.post-form').reset();
 
+   const post = document.querySelectorAll('post-template');
+   const postIndex = post.length - 1;
+   const root = post[postIndex] && post[postIndex].shadowRoot;
+   const postDeleteBtn = root.querySelector('.post-btn-delete');
+   const postEditBtn = root.querySelector('.post-btn-edit');
+
+   postDeleteBtn.addEventListener('click', () => {
+
+      post[postIndex].style.animation = 'deleted 0.7s ease-out';
+      post[postIndex].addEventListener('animationend', () => {
+         post[postIndex].remove();         
+      });
+
+   })
+
+   postEditBtn.addEventListener('click', () => {
+
+      post[postIndex].classList.toggle('post-on-edit');
+      popupContainer.classList.toggle('popup-active');
+      postEditor.classList.toggle('popup-active');
+      popupContainer.dispatchEvent(postEdit);
+
+   })
+
 })
+
+popupContainer.addEventListener('editingpost', () => {
+   
+   const post = document.querySelector('.post-on-edit');
+   const root = post && post.shadowRoot;
+   const postAuthor = root.querySelector('.post-details').children[0].innerHTML.match(/(?<=^&gt;\s).*(?=\s—\s.*$)/g);
+   const postTitle = root.querySelector('.post-title').innerHTML;
+   const postCaption = root.querySelector('.post-caption').innerHTML;
+
+   editAuthor.setAttribute('value', postAuthor);
+   editTitle.setAttribute('value', postTitle);
+   editCaption.innerHTML = postCaption;
+
+})
+
+popupEditBtn.addEventListener('click', (e) => {
+      
+   e.preventDefault();
+   
+   const post = document.querySelector('.post-on-edit');
+   const root = post && post.shadowRoot;
+   let time = getTime();
+
+   root.querySelector('.post-details').children[0].innerHTML = `&gt; ${editAuthor.value} — ${time} EDITED`;
+   root.querySelector('.post-title').innerHTML = editTitle.value;
+   root.querySelector('.post-caption').innerHTML = editCaption.value;
+
+   document.querySelector('.edit-form').reset();
+
+   popupContainer.classList.toggle('popup-active');
+   postEditor.classList.toggle('popup-active');
+   post.classList.toggle('post-on-edit');
+
+})
+
+popupCloseBtn.forEach((close) => {
+
+   close.addEventListener('click', (e) => {
+   
+      const post = document.querySelector('.post-on-edit');
+      popupContainer.classList.toggle('popup-active');
+      e.target.parentElement.classList.toggle('popup-active');
+      post.classList.toggle('post-on-edit');
+      
+   })
+
+})
+
+function getTime() {
+
+   let now = new Date();
+   let month = now.getMonth();
+   let date = now.getDate();
+   let year = now.getFullYear();
+   let hr = now.getHours() % 12;
+   let mins = now.getMinutes().toString().padStart(2, '0');
+   let ampm = now.getHours() > 12 ? 'PM' : 'AM';
+   return `${month}/${date}/${year} (${hr}:${mins} ${ampm})`;
+   
+}
