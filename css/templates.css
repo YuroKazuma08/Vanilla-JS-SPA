@@ -11,7 +11,7 @@
    background-color: cornsilk;
    display: flex;
    flex-direction: column;
-   width: 45vw;
+   width: 60vw;
    margin: 10px;
    padding: 15px;
    border: 1px solid black;
@@ -23,12 +23,12 @@
 @keyframes slide-in {
    0% {
       transform: translateY(-250px);
-      width: 50vw;
+      width: 70vw;
       opacity: 0;
    }
    100% {
       transform: translateY(0px);
-      width: 45vw;
+      width: 60vw;
       opacity: 1;
    }
 }
@@ -88,4 +88,37 @@
 
 .post-btn-delete:hover {
    background-color: rgb(250, 74, 74);
+}
+
+@media screen and (max-width: 768px) {
+
+   .post-content {
+      width: 85vw;
+   }
+
+   @keyframes slide-in {
+      0% {
+         transform: translateY(-250px);
+         width: 95vw;
+         opacity: 0;
+      }
+      100% {
+         transform: translateY(0px);
+         width: 85vw;
+         opacity: 1;
+      }
+   }
+   
+}
+
+@media screen and (max-width: 425px) {
+
+   .post-title {
+      font-size: 20px;
+   }
+   
+   .post-content p {
+      font-size: 14px;
+   }
+   
 }

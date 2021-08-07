@@ -24,7 +24,7 @@ body {
    background-color: cornsilk;
    position: relative;
    z-index: 1;
-   width: 50vw;
+   width: 70vw;
    display: flex;
    justify-content: center;
    margin: 20px;
@@ -112,7 +112,7 @@ body {
    background-color: cornsilk;
    position: relative;
    z-index: 3;
-   width: 50vw;
+   width: 70vw;
    justify-content: center;
    flex-direction: column;
    margin: 20px;
@@ -179,4 +179,26 @@ body {
 .popup-active {
    pointer-events: auto;
    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+
+   .post-maker {
+      width: 95vw;
+   }
+
+   .popup-edit {
+      width: 95vw;
+   }
+
+   .posts-container {
+      width: 95vw;
+   }
+
+   post-template {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+   }
+   
 }

@@ -51,6 +51,8 @@ postSubmitBtn.addEventListener('click', (e) => {
 
 function addPost(post) {
 
+   const finalCaption = post.lsCaption.replace(/\n/g,'<br\>').replace(/\s{4}/g,'&emsp;');
+
    template.innerHTML = `
 
    <link rel="stylesheet" href="./css/templates.css">
@@ -61,7 +63,7 @@ function addPost(post) {
          <h3>&gt; ${post.lsAuthor} — ${post.lsTime}</h3>
       </div>
       <hr>
-      <p class="post-caption">${post.lsCaption}</p>
+      <p class="post-caption">${finalCaption}</p>
       <hr>
       <div class="post-controls">
          <button class="post-btn-edit">EDIT</button>
@@ -110,7 +112,7 @@ popupContainer.addEventListener('editingpost', () => {
    const root = post && post.shadowRoot;
    const postAuthor = root.querySelector('.post-details').children[0].innerHTML.match(/(?<=^&gt;\s).*(?=\s—\s.*$)/g);
    const postTitle = root.querySelector('.post-title').innerHTML;
-   const postCaption = root.querySelector('.post-caption').innerHTML;
+   const postCaption = root.querySelector('.post-caption').innerHTML.replace(/<br>/g,'\n');
 
    editAuthor.setAttribute('value', postAuthor);
    editTitle.setAttribute('value', postTitle);
@@ -126,9 +128,11 @@ popupEditBtn.addEventListener('click', (e) => {
    const root = post && post.shadowRoot;
    let time = getTime();
 
+   const finalCaption = editCaption.value.replace(/\n/g,'<br\>').replace(/\s{4}/g,'&emsp;');
+
    root.querySelector('.post-details').children[0].innerHTML = `&gt; ${editAuthor.value} — ${time} EDITED`;
    root.querySelector('.post-title').innerHTML = editTitle.value;
-   root.querySelector('.post-caption').innerHTML = editCaption.value;
+   root.querySelector('.post-caption').innerHTML = finalCaption;
 
    let edited = {
       lsAuthor: editAuthor.value,
@@ -170,7 +174,7 @@ function getTime() {
    let month = now.getMonth();
    let date = now.getDate();
    let year = now.getFullYear();
-   let hr = now.getHours() % 12;
+   let hr = now.getHours() % 12 === 0 ? 12 : now.getHours() % 12;
    let mins = now.getMinutes().toString().padStart(2, '0');
    let ampm = now.getHours() > 12 ? 'PM' : 'AM';
    return `${month}/${date}/${year} (${hr}:${mins} ${ampm})`;
