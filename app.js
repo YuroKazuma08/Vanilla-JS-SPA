@@ -17,6 +17,12 @@ const [ editAuthor, editTitle, editCaption, popupEditBtn ] = document.querySelec
 const [ author, title, caption, postSubmitBtn ] = document.querySelector('.post-form');
 const postEdit = new Event('editingpost');
 
+if (localStorage.getItem('posts')) {
+   JSON.parse(localStorage.getItem('posts')).forEach((getPost) => {
+      addPost(getPost);
+  })
+}
+
 postSubmitBtn.addEventListener('click', (e) => {
 
    e.preventDefault();
@@ -24,20 +30,38 @@ postSubmitBtn.addEventListener('click', (e) => {
    if (!author.value) return alert('Enter your name first!');
    if (!title.value) return alert('Please enter a title for your post.');
    if (!caption.value) return alert('Post caption cannot be empty!');
+   
+   const newPost = {
+      lsAuthor: author.value,
+      lsTime: getTime(),
+      lsTitle: title.value,
+      lsCaption: caption.value
+   }
 
-   let time = getTime();
+   addPost(newPost);
+   
+   let lsPost = localStorage.getItem('posts') ? JSON.parse(localStorage.getItem('posts')) : [];
+
+   lsPost.push(newPost);   
+   localStorage.setItem('posts', JSON.stringify(lsPost));
+
+   document.querySelector('.post-form').reset();
+
+})
+
+function addPost(post) {
 
    template.innerHTML = `
 
    <link rel="stylesheet" href="./css/templates.css">
    
    <div class="post-content">
-      <h1 class="post-title">${title.value}</h1>
+      <h1 class="post-title">${post.lsTitle}</h1>
       <div class="post-details">
-         <h3>&gt; ${author.value} — ${time}</h3>
+         <h3>&gt; ${post.lsAuthor} — ${post.lsTime}</h3>
       </div>
       <hr>
-      <p class="post-caption">${caption.value}</p>
+      <p class="post-caption">${post.lsCaption}</p>
       <hr>
       <div class="post-controls">
          <button class="post-btn-edit">EDIT</button>
@@ -50,33 +74,35 @@ postSubmitBtn.addEventListener('click', (e) => {
    let newPost = document.createElement('post-template');
    postsContainer.appendChild(newPost);
 
-   document.querySelector('.post-form').reset();
-
-   const post = document.querySelectorAll('post-template');
-   const postIndex = post.length - 1;
-   const root = post[postIndex] && post[postIndex].shadowRoot;
+   const thisPost = document.querySelectorAll('post-template');
+   const postIndex = thisPost.length - 1;
+   const root = thisPost[postIndex] && thisPost[postIndex].shadowRoot;
    const postDeleteBtn = root.querySelector('.post-btn-delete');
    const postEditBtn = root.querySelector('.post-btn-edit');
 
    postDeleteBtn.addEventListener('click', () => {
 
-      post[postIndex].style.animation = 'deleted 0.7s ease-out';
-      post[postIndex].addEventListener('animationend', () => {
-         post[postIndex].remove();         
+      thisPost[postIndex].classList.toggle('deleting-post');
+      thisPost[postIndex].style.animation = 'deleted 0.7s ease-out';
+
+      deletePost();
+
+      thisPost[postIndex].addEventListener('animationend', () => {
+         thisPost[postIndex].remove();         
       });
 
    })
 
    postEditBtn.addEventListener('click', () => {
 
-      post[postIndex].classList.toggle('post-on-edit');
+      thisPost[postIndex].classList.toggle('post-on-edit');
       popupContainer.classList.toggle('popup-active');
       postEditor.classList.toggle('popup-active');
       popupContainer.dispatchEvent(postEdit);
 
    })
 
-})
+}
 
 popupContainer.addEventListener('editingpost', () => {
    
@@ -103,6 +129,19 @@ popupEditBtn.addEventListener('click', (e) => {
    root.querySelector('.post-details').children[0].innerHTML = `&gt; ${editAuthor.value} — ${time} EDITED`;
    root.querySelector('.post-title').innerHTML = editTitle.value;
    root.querySelector('.post-caption').innerHTML = editCaption.value;
+
+   let edited = {
+      lsAuthor: editAuthor.value,
+      lsTime: `${time} EDITED`,
+      lsTitle: editTitle.value,
+      lsCaption: editCaption.value
+   }
+
+   let lsIndex = Array.prototype.indexOf.call(postsContainer.children, post);
+   let editedPost = JSON.parse(localStorage.getItem('posts'));
+   editedPost[lsIndex] = edited;
+
+   localStorage.setItem('posts', JSON.stringify(editedPost));
 
    document.querySelector('.edit-form').reset();
 
@@ -136,4 +175,20 @@ function getTime() {
    let ampm = now.getHours() > 12 ? 'PM' : 'AM';
    return `${month}/${date}/${year} (${hr}:${mins} ${ampm})`;
    
+}
+
+function deletePost() {
+
+   const allPosts = document.querySelectorAll('post-template');
+   for (let i = 0; i < allPosts.length; i++) {
+
+      if (allPosts[i].classList.contains('deleting-post')) {
+
+         let lsPost = JSON.parse(localStorage.getItem('posts')).filter( (val, ind) => ind !== i );
+         localStorage.setItem('posts', JSON.stringify(lsPost));
+         break;
+         
+      }
+   }
+
 }
