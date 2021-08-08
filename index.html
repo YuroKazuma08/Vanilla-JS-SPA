@@ -6,7 +6,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="./css/styles.css">
-      <title>Vanilla JS | SPA</title>
+      <title>myJournal</title>
    </head>
 
    
@@ -14,6 +14,11 @@
    <body>
 
       <div class="post-maker">
+         <h1 class="app-title">myJournal</h1>
+         <p class="app-description"><strong>myJournal</strong> is a Single Page Appliaction for personal use, and is running only on your browser (client-side).
+         <br>Your posts will be saved on the local storage of your browser and will not be visible to anyone else on the internet.</p>
+         <hr>
+         <button class="post-btn-create post-form-active">CREATE NEW POST</button>
          <form action="" method="POST" class="post-form">
             <input type="text" name="author" id="author" placeholder="Enter your name..." required>
             <input type="text" name="title" id="title" placeholder="Enter Post Title..." required>
@@ -39,8 +44,16 @@
             </form>
          </div>
 
-         <div class="delete-warning">
-
+         <div class="popup-warning">
+            <div class="warning-logo">
+               <h1>!</h1>
+            </div>
+            <h1>ARE YOU SURE YOU WANT TO DELETE THIS POST?</h1>
+            <p>NOTE: This action cannot be undone.</p>
+            <div class="popup-warning-controls">
+               <button class="popup-btn-yes">YES</button>
+               <button class="popup-btn-cancel">CANCEL</button>
+            </div>
          </div>
       </div>
 

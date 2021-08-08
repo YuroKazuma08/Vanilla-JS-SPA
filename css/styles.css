@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
 
 * {
    margin: 0;
@@ -26,6 +27,7 @@ body {
    z-index: 1;
    width: 70vw;
    display: flex;
+   flex-direction: column;
    justify-content: center;
    margin: 20px;
    padding: 15px;
@@ -34,13 +36,25 @@ body {
    box-shadow: -2px 4px 7px 1px rgba(0,0,0,0.2), -1px 2px 3px 1px rgba(0,0,0,0.2);
 }
 
+.app-title {
+   font-family: 'Courgette', cursive;
+   text-align: center;
+   font-size: 50px;
+}
+
+.app-description {
+   text-align: center;
+   padding: 12px 20px;
+}
+
 .post-form {
    position: relative;
-   display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
    width: 100%;
+   display: none;
+   pointer-events: none;
 }
 
 .post-form input {
@@ -57,7 +71,7 @@ body {
    resize: none;
 }
 
-.post-btn-submit {
+.post-btn-submit, .post-btn-create {
    width: 100%;
    color: white;
    font-size: 17px;
@@ -69,7 +83,14 @@ body {
    cursor: pointer;
 }
 
-.post-btn-submit:hover {
+.post-btn-create {
+   margin: 10px 0;
+   display: none;
+   pointer-events: none;
+   justify-content: center;
+}
+
+.post-btn-submit:hover, .post-btn-create:hover {
    background-color: rgb(104, 207, 0);
 }
 
@@ -114,13 +135,14 @@ post-template {
    display: none;
 }
 
-.popup-edit {
+.popup-edit, .popup-warning {
    background-color: cornsilk;
    position: relative;
    z-index: 3;
    width: 70vw;
    justify-content: center;
    flex-direction: column;
+   align-items: center;
    margin: 20px;
    padding: 15px;
    border: 1px solid black;
@@ -182,7 +204,76 @@ post-template {
    background-color: rgb(104, 207, 0);
 }
 
-.popup-active {
+.popup-warning {
+   width: auto;
+   padding: 30px;
+   text-align: center;
+}
+
+.warning-logo {
+   height: 300px;
+   width: 300px;
+   border-radius: 50%;
+   border-color: red;
+   border-style: solid;
+   border-width: 10px;
+   margin-bottom: 30px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.popup-warning h1 {
+   font-size: 25px;
+   line-height: 25px;
+}
+
+.popup-warning p {
+   font-size: 16px;
+}
+
+.warning-logo h1 {
+   color: red;
+   font-size: 200px;
+}
+
+.popup-warning-controls {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.popup-warning-controls button {
+   color: white;
+   width: 135px;
+   font-size: 17px;
+   font-weight: 500;
+   margin: 15px 15px 0 15px;
+   padding: 3px;
+   cursor: pointer;
+   border: 1px solid black;
+   border-radius: 5px;
+}
+
+.popup-btn-yes {
+   background-color: blue;
+}
+
+.popup-btn-yes:hover {
+   background-color: rgb(37, 157, 255);
+}
+
+.popup-btn-cancel {
+   background-color: red;
+}
+
+.popup-btn-cancel:hover {
+   background-color: rgb(250, 74, 74);
+}
+
+.popup-active, .post-form-active {
    pointer-events: auto;
    display: flex;
 }
@@ -205,6 +296,25 @@ post-template {
       width: 100%;
       display: flex;
       justify-content: center;
+   }
+
+   .warning-logo {
+      height: 200px;
+      width: 200px;
+   }
+
+   .popup-warning h1 {
+      font-size: 22px;
+      line-height: 22px;
+   }
+   
+   .popup-warning p {
+      font-size: 13px;
+      line-height: 15px;
+   }
+   
+   .warning-logo h1 {
+      font-size: 150px;
    }
    
 }
