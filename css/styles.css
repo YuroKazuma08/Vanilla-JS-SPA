@@ -79,7 +79,13 @@ body {
    flex-direction: column-reverse;
    justify-content: center;
    align-items: center;
-   width: 50vw;
+   width: 60vw;
+}
+
+post-template {
+   width: 100%;
+   display: flex;
+   justify-content: center;
 }
 
 @keyframes deleted {
@@ -199,6 +205,26 @@ body {
       width: 100%;
       display: flex;
       justify-content: center;
+   }
+   
+}
+
+@media screen and (min-width: 1440px) {
+
+   .post-maker {
+      width: 1000px;
+   }
+
+   .popup-edit {
+      width: 1000px;
+   }
+
+   .posts-container {
+      width: 1000px;
+   }
+
+   post-template {
+      width: 875px;
    }
    
 }

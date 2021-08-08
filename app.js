@@ -17,6 +17,10 @@ const [ editAuthor, editTitle, editCaption, popupEditBtn ] = document.querySelec
 const [ author, title, caption, postSubmitBtn ] = document.querySelector('.post-form');
 const postEdit = new Event('editingpost');
 
+if (localStorage.getItem('user')) {
+   author.setAttribute('value', localStorage.getItem('user'));
+}
+
 if (localStorage.getItem('posts')) {
    JSON.parse(localStorage.getItem('posts')).forEach((getPost) => {
       addPost(getPost);
@@ -39,6 +43,8 @@ postSubmitBtn.addEventListener('click', (e) => {
    }
 
    addPost(newPost);
+
+   localStorage.setItem('user', author.value);
    
    let lsPost = localStorage.getItem('posts') ? JSON.parse(localStorage.getItem('posts')) : [];
 
@@ -46,6 +52,7 @@ postSubmitBtn.addEventListener('click', (e) => {
    localStorage.setItem('posts', JSON.stringify(lsPost));
 
    document.querySelector('.post-form').reset();
+   author.setAttribute('value', localStorage.getItem('user'));
 
 })
 

@@ -11,24 +11,24 @@
    background-color: cornsilk;
    display: flex;
    flex-direction: column;
-   width: 60vw;
+   width: calc(100% - 20px);
    margin: 10px;
    padding: 15px;
    border: 1px solid black;
    border-radius: 5px;
    box-shadow: -2px 4px 7px 1px rgba(0,0,0,0.2), -1px 2px 3px 1px rgba(0,0,0,0.2);
-   animation: slide-in 0.4s cubic-bezier(0.03, 1.29, 0.96, 1.04);
+   animation: slide-in 0.65s cubic-bezier(0.03, 1.29, 0.96, 1.04);
 }
 
 @keyframes slide-in {
    0% {
       transform: translateY(-250px);
-      width: 70vw;
+      width: 50px;
       opacity: 0;
    }
    100% {
       transform: translateY(0px);
-      width: 60vw;
+      width: calc(100% - 20px);
       opacity: 1;
    }
 }
