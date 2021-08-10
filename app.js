@@ -19,8 +19,10 @@ const popupCloseBtn = document.querySelector('.popup-btn-close');
 const postCreateBtn = document.querySelector('.post-btn-create');
 const [ postEditor, popupWarning ] = popupContainer.children;
 const [ popupYes, popupCancel ] = popupWarning.querySelectorAll('button');
-const [ editAuthor, editTitle, editCaption, popupEditBtn ] = document.querySelector('.edit-form');
-const [ author, title, caption, postSubmitBtn ] = document.querySelector('.post-form');
+const form = document.querySelector('.post-form');
+const [ author, title, caption, postSubmitBtn ] = form;
+const editForm = document.querySelector('.edit-form');
+const [ editAuthor, editTitle, editCaption, popupEditBtn ] = editForm;
 const postEdit = new Event('editingpost');
 
 
@@ -41,8 +43,8 @@ if (localStorage.getItem('posts')) {
 // EVENT LISTENERS
 postCreateBtn.addEventListener('click', () => {
 
-   postCreateBtn.classList.toggle('post-form-active');
-   document.querySelector('.post-form').classList.toggle('post-form-active');
+   postCreateBtn.classList.toggle('active');
+   form.classList.toggle('active');
 
 })
 
@@ -53,9 +55,8 @@ postSubmitBtn.addEventListener('click', (e) => {
 
 
    // POST VALIDATION
-   if (!author.value) return alert('Enter your name first!');
-   if (!title.value) return alert('Please enter a title for your post.');
-   if (!caption.value) return alert('Post caption cannot be empty!');
+   form.querySelector('.validation-error').classList.remove('active');
+   if (invalid(form)) return;
    
    const newPost = {
       lsAuthor: author.value,
@@ -72,19 +73,44 @@ postSubmitBtn.addEventListener('click', (e) => {
    lsPost.push(newPost);   
    localStorage.setItem('posts', JSON.stringify(lsPost));
 
-   document.querySelector('.post-form').reset();
+   form.reset();
    author.setAttribute('value', localStorage.getItem('user'));
 
-   postCreateBtn.classList.toggle('post-form-active');
-   document.querySelector('.post-form').classList.toggle('post-form-active');
+   postCreateBtn.classList.toggle('active');
+   form.classList.toggle('active');
 
 })
+
+// INPUT VALIDATION EVENT LISTENERS
+for (i = 0; i < 3; i++) {
+
+   form.children[i].addEventListener('focus', (e) => {
+      e.target.classList.remove('invalid-input');
+   })
+
+   form.children[i].addEventListener('blur', (e) => {
+      if (!e.target.value) {
+         e.target.classList.add('invalid-input');
+      }
+   })
+
+   editForm.children[i+1].addEventListener('focus', (e) => {
+      e.target.classList.remove('invalid-input');
+   })
+
+   editForm.children[i+1].addEventListener('blur', (e) => {
+      if (!e.target.value) {
+         e.target.classList.add('invalid-input');
+      }
+   })
+
+}
 
 popupContainer.addEventListener('editingpost', () => {
    
    const post = document.querySelector('.post-on-edit');
    const root = post && post.shadowRoot;
-   const postAuthor = root.querySelector('.post-details').children[0].innerHTML.match(/(?<=^&gt;\s).*(?=\s—\s.*$)/g);
+   const postAuthor = root.querySelector('.post-author').innerHTML.match(/(?<=^&gt;\s).*(?=\s—\s.*$)/g);
    const postTitle = root.querySelector('.post-title').innerHTML;
    const postCaption = root.querySelector('.post-caption').innerHTML.replace(/<br>/g,'\n');
 
@@ -98,13 +124,16 @@ popupEditBtn.addEventListener('click', (e) => {
       
    e.preventDefault();
    
+   editForm.querySelector('.validation-error').classList.remove('active');
+   if (invalid(editForm)) return;
+   
    const post = document.querySelector('.post-on-edit');
    const root = post && post.shadowRoot;
    let time = getTime();
 
    const finalCaption = editCaption.value.replace(/\n/g,'<br\>').replace(/\s{4}/g,'&emsp;');
 
-   root.querySelector('.post-details').children[0].innerHTML = `&gt; ${editAuthor.value} — ${time} EDITED`;
+   root.querySelector('.post-author').innerHTML = `&gt; ${editAuthor.value} — ${time} EDITED`;
    root.querySelector('.post-title').innerHTML = editTitle.value;
    root.querySelector('.post-caption').innerHTML = finalCaption;
 
@@ -121,10 +150,10 @@ popupEditBtn.addEventListener('click', (e) => {
 
    localStorage.setItem('posts', JSON.stringify(editedPost));
 
-   document.querySelector('.edit-form').reset();
+   editForm.reset();
 
-   popupContainer.classList.toggle('popup-active');
-   postEditor.classList.toggle('popup-active');
+   popupContainer.classList.toggle('active');
+   postEditor.classList.toggle('active');
    post.classList.toggle('post-on-edit');
 
 })
@@ -132,25 +161,31 @@ popupEditBtn.addEventListener('click', (e) => {
 popupCloseBtn.addEventListener('click', (e) => {
    
       const post = document.querySelector('.post-on-edit');
-      popupContainer.classList.toggle('popup-active');
-      e.target.parentElement.classList.toggle('popup-active');
+      popupContainer.classList.toggle('active');
+      e.target.parentElement.classList.toggle('active');
       post.classList.toggle('post-on-edit');
+
+      // REMOVE ALL VALIDATION ERRORS
+      const allInvalid = editForm.querySelectorAll('.invalid-input');
+      allInvalid.forEach((elem) => elem.classList.remove('invalid-input'));
+      editForm.querySelector('.validation-error').classList.remove('active');
+      editForm.reset();
       
 })
 
 popupYes.addEventListener('click', () => {
 
    deletePost();
-   popupContainer.classList.toggle('popup-active');
-   popupWarning.classList.toggle('popup-active');
+   popupContainer.classList.toggle('active');
+   popupWarning.classList.toggle('active');
 
 })
 
 popupCancel.addEventListener('click', () => {
 
    document.querySelector('.deleting-post').classList.toggle('deleting-post');
-   popupContainer.classList.toggle('popup-active');
-   popupWarning.classList.toggle('popup-active');
+   popupContainer.classList.toggle('active');
+   popupWarning.classList.toggle('active');
 
 })
 
@@ -169,16 +204,18 @@ function addPost(post) {
    <link rel="stylesheet" href="./css/templates.css">
    
    <div class="post-content">
-      <h1 class="post-title">${post.lsTitle}</h1>
       <div class="post-details">
-         <h3>&gt; ${post.lsAuthor} — ${post.lsTime}</h3>
+         <h1 class="post-title">${post.lsTitle}</h1>
+         <h3 class="post-author">&gt; ${post.lsAuthor} — ${post.lsTime}</h3>
+         <hr>
       </div>
-      <hr>
       <p class="post-caption">${finalCaption}</p>
-      <hr>
       <div class="post-controls">
-         <button class="post-btn-edit">EDIT</button>
-         <button class="post-btn-delete">DELETE</button>
+         <hr>
+         <div>
+            <button class="post-btn-edit">EDIT</button>
+            <button class="post-btn-delete">DELETE</button>
+         </div>
       </div>
    </div>
    
@@ -197,8 +234,8 @@ function addPost(post) {
 
    postDeleteBtn.addEventListener('click', () => {
 
-      popupContainer.classList.toggle('popup-active');
-      popupWarning.classList.toggle('popup-active');
+      popupContainer.classList.toggle('active');
+      popupWarning.classList.toggle('active');
       thisPost[postIndex].classList.toggle('deleting-post');
 
    })
@@ -206,8 +243,8 @@ function addPost(post) {
    postEditBtn.addEventListener('click', () => {
 
       thisPost[postIndex].classList.toggle('post-on-edit');
-      popupContainer.classList.toggle('popup-active');
-      postEditor.classList.toggle('popup-active');
+      popupContainer.classList.toggle('active');
+      postEditor.classList.toggle('active');
       popupContainer.dispatchEvent(postEdit);
 
    })
@@ -222,7 +259,7 @@ function deletePost() {
       // LOOK FOR THE POST THAT IS BEING DELETED
       if (allPosts[i].classList.contains('deleting-post')) {
 
-         allPosts[i].style.animation = 'deleted 0.7s ease-out';
+         allPosts[i].style.animation = 'deleted 0.5s ease-out';
          allPosts[i].addEventListener('animationend', () => {
             allPosts[i].remove();         
          });
@@ -234,6 +271,33 @@ function deletePost() {
       }
    }
 
+}
+
+function invalid(form) {
+
+   // COLLECT ELEMENTS WITH INVALID INPUT
+   let error = [];
+   for (n = 0; n < form.children.length; n++) {
+
+      if (form.children[n].tagName !== 'INPUT' &&
+         form.children[n].tagName !== 'TEXTAREA') { continue }
+      
+      if (!form.children[n].value) {
+
+         form.children[n].classList.add('invalid-input');
+         error.push(form.children[n]);
+
+      }
+   }
+
+   if (error.length !== 0) {
+
+      form.querySelector('.validation-error').classList.add('active');
+      return true;
+
+   }
+
+   return false;
 }
 
 function getTime() {

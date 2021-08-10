@@ -15,14 +15,15 @@
 
       <div class="post-maker">
          <h1 class="app-title">myJournal</h1>
-         <p class="app-description"><strong>myJournal</strong> is a Single Page Appliaction for personal use, and is running only on your browser (client-side).
+         <p class="app-description"><strong>myJournal</strong> is a Single Page Application for personal use, and is running only on your browser (client-side).
          <br>Your posts will be saved on the local storage of your browser and will not be visible to anyone else on the internet.</p>
          <hr>
-         <button class="post-btn-create post-form-active">CREATE NEW POST</button>
+         <button class="post-btn-create active">CREATE NEW POST</button>
          <form action="" method="POST" class="post-form">
             <input type="text" name="author" id="author" placeholder="Enter your name..." required>
             <input type="text" name="title" id="title" placeholder="Enter Post Title..." required>
             <textarea name="caption" id="caption" placeholder="Type your post here..." required></textarea>
+            <p class="validation-error">PLEASE ENTER COMPLETE DETAILS!</p>
             <button class="post-btn-submit">POST</button>
          </form>
       </div>
@@ -40,7 +41,8 @@
                <input type="text" id="edit-author" placeholder="Enter your name...">
                <input type="text" id="edit-title" placeholder="Enter Post Title...">
                <textarea name="" id="edit-caption" placeholder="Type your post here..."></textarea>
-               <button class="popup-btn-edit">EDIT</button>
+               <p class="validation-error">PLEASE ENTER COMPLETE DETAILS!</p>
+               <button class="popup-btn-edit">SAVE</button>
             </form>
          </div>
 
